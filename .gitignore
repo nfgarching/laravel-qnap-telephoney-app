@@ -1,0 +1,5 @@
+/src/.env
+/src/vendor/
+/src/node_modules/
+/src/database/*.sqlite*
+/src/storage/*.key

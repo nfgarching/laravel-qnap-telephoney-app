@@ -1,0 +1,8 @@
+#!/bin/sh
+# php artisan im laufenden app-Container – immer als www-data (= Host-User),
+# damit keine root-eigenen Dateien (SQLite-WAL, Caches, Logs) entstehen.
+# Aufruf: ./artisan <befehl> [optionen]
+export DOCKER_CONFIG="${DOCKER_CONFIG:-/share/homes/$(id -un)/.docker}"
+cd "$(dirname "$0")" || exit 1
+if [ -t 0 ]; then TTY=""; else TTY="-T"; fi
+exec docker compose exec $TTY -u www-data -e HOME=/tmp app php artisan "$@"
