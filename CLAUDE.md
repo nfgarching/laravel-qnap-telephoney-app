@@ -1,5 +1,6 @@
-# Anrufanzeige (telephony.froehler-kollegen.de)
+# Anrufanzeige für Sipgate-Telephony
 
+Domain und Traefik-Werte: `.env` (Vorlage `.env.example`), Laravel: `src/.env`.
 Eigenständige Laravel-13-App auf einem QNAP-NAS (aarch64, Kernel 5.10, Container Station).
 Die Fachlogik (sipgate-Webhook, Anrufliste `/telefon`, Web-Push, Rufnummernabgleich, `telephony:*`)
 steckt im Package `nfgarching/telephony` (`src/vendor/`, Quelle: github.com/nfgarching/laravel-bootstrap-telephony).

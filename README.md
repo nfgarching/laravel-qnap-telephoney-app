@@ -1,12 +1,13 @@
-# Anrufanzeige – telephony.froehler-kollegen.de
+# Anrufanzeige für Sipgate-Telephony
 
 Eigenständige Laravel-13-App mit [`nfgarching/telephony`](https://github.com/nfgarching/laravel-bootstrap-telephony):
 eingehende sipgate-Anrufe live auf dem Handy (Reverb + Web-Push), Datenbank SQLite.
+Läuft auf einem QNAP-NAS (Container Station) hinter einem vorhandenen Traefik, der TLS übernimmt.
 
 ## Aufbau
 
 ```
-Internet ─▶ Traefik (TLS, Let's Encrypt, Security-Header)  ../../docker-compose.yml
+Internet ─▶ Traefik (TLS, Let's Encrypt, Security-Header)  eigener Stack, Netz $TRAEFIK_NETWORK
               └─▶ telephony_web (nginx, nur src/public/ gemountet)
                     ├─▶ telephony_app      PHP-FPM 8.4  (src/)
                     └─▶ telephony_reverb   WebSockets unter /app
@@ -20,6 +21,7 @@ Kein Container veröffentlicht einen Host-Port; erreichbar ist nur, was Traefik 
 | Datei | Inhalt |
 |---|---|
 | `docker-compose.yaml` | Dienste, Traefik-Labels |
+| `.env` | Domain und Traefik-Einstellungen für Compose (Vorlage `.env.example`, nicht im Repository) |
 | `docker/php/` | PHP-8.4-FPM-Image (Bookworm, wegen QNAP-Kernel 5.10) + `php.ini` |
 | `docker/nginx/default.conf` | nginx hinter Traefik |
 | `start.sh` | `docker compose up -d` mit QNAP-Workarounds (`./start.sh --build` baut neu) |
@@ -37,7 +39,7 @@ Kein Container veröffentlicht einen Host-Port; erreichbar ist nur, was Traefik 
 - **Zugriff auf Anrufe**: zusätzlich auf Benutzer-IDs beschränkbar (`TELEPHONY_USERS=1,2`).
 - **sipgate-Webhook**: geheimes 64-stelliges Token in der URL **und** IP-Allowlist
   (`SIPGATE_WEBHOOK_IPS`, push-api.sipgate.net: 217.116.118.254, 212.9.46.32). Sonst 404.
-- **WebSockets**: Reverb akzeptiert nur Origin `telephony.froehler-kollegen.de`; private Kanäle über Gate `viewTelephony`.
+- **WebSockets**: Reverb akzeptiert nur die eigene Domain als Origin (`REVERB_ALLOWED_ORIGINS`); private Kanäle über Gate `viewTelephony`.
 - **HTTP**: HSTS, `X-Frame-Options: DENY`, `nosniff`, `Referrer-Policy`, `noindex`; `APP_DEBUG=false`, keine Versions-Header.
 - **Proxy-Header**: nginx übergibt PHP die echte Client-IP als `REMOTE_ADDR` und `HTTPS=on`; `X-Forwarded-*` werden verworfen
   (keine TrustProxies, kein IP-Spoofing).
@@ -48,10 +50,10 @@ Kein Container veröffentlicht einen Host-Port; erreichbar ist nur, was Traefik 
 ./artisan user:create                 # fragt E-Mail, Name, Passwort
 ```
 
-1. `https://telephony.froehler-kollegen.de` auf dem Handy öffnen, anmelden, 2FA einrichten.
+1. `https://<APP_DOMAIN>` auf dem Handy öffnen, anmelden, 2FA einrichten.
 2. Auf der Anrufliste die Glocke antippen und Benachrichtigungen erlauben. iPhone: *Teilen → Zum Home-Bildschirm*, von dort öffnen.
 3. In sipgate unter *Webhooks* als URL für eingehende Anrufe eintragen:
-   `https://telephony.froehler-kollegen.de/telephony/webhook/sipgate/<SIPGATE_WEBHOOK_TOKEN aus src/.env>`
+   `https://<APP_DOMAIN>/telephony/webhook/sipgate/<SIPGATE_WEBHOOK_TOKEN aus src/.env>`
 
 Test ohne echten Anruf: `./artisan telephony:simulate "089 123456"` (bzw. `--answer`, `--keep`).
 
@@ -94,13 +96,18 @@ docker run --rm -u 1000:100 -e HOME=/tmp -v "$PWD/src":/app -w /app node:22-book
 
 ## Neu aufsetzen (aus dem Git-Repository)
 
-Nicht im Repository: `src/.env`, `src/vendor/`, `src/node_modules/`, `src/public/build/`, die SQLite-Datenbank.
+Nicht im Repository: `.env`, `src/.env`, `src/vendor/`, `src/node_modules/`, `src/public/build/`, die SQLite-Datenbank.
 
 ```sh
 export DOCKER_CONFIG=/share/homes/$(id -un)/.docker
+
+# Compose/Traefik: APP_DOMAIN, Traefik-Netz, Resolver, Router-Name eintragen
+cp .env.example .env && chmod 600 .env
+
 docker compose build app
 R="docker run --rm -u 1000:100 -e HOME=/tmp -v $PWD/src:/var/www/html telephony-app:latest"
 
+# Laravel: APP_URL, REVERB_ALLOWED_ORIGINS und VITE_REVERB_HOST auf APP_DOMAIN setzen
 cp src/.env.example src/.env && chmod 600 src/.env
 # Geheimnisse eintragen (oder aus der Sicherung übernehmen!):
 #   APP_KEY             → $R php artisan key:generate
@@ -116,7 +123,7 @@ docker run --rm -u 1000:100 -e HOME=/tmp -v "$PWD/src":/app -w /app node:22-book
 
 ## Sicherung
 
-Wichtig sind nur `src/.env` (APP_KEY, VAPID-Schlüssel, Tokens) und `src/database/database.sqlite`.
+Wichtig sind nur `.env`, `src/.env` (APP_KEY, VAPID-Schlüssel, Tokens) und `src/database/database.sqlite`.
 Konsistente Kopie im laufenden Betrieb:
 
 ```sh
