@@ -14,6 +14,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/* \
     && docker-php-ext-install \
         pdo_sqlite \
+        pdo_mysql \
         pcntl \
         bcmath \
         gmp \

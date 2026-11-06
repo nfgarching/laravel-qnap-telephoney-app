@@ -32,6 +32,25 @@ return [
 
     'connections' => [
 
+        'akv' => [
+            'driver' => env('DB_AKV_CONNECTION', 'mariadb'),
+            'host' => env('DB_AKV_HOST', '127.0.0.1'),
+            'port' => env('DB_AKV_PORT', '3306'),
+            'database' => env('DB_AKV_DATABASE', 'AkV_testing'),
+            'username' => env('DB_AKV_USERNAME', 'root'),
+            'password' => env('DB_AKV_PASSWORD', ''),
+            'unix_socket' => '',
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'prefix_indexes' => true,
+            'strict' => true,
+            'engine' => 'InnoDB',
+            'options' => extension_loaded('pdo_mysql') ? array_filter([
+                (PHP_VERSION_ID >= 80400 ? Mysql::ATTR_SSL_CA : PDO::MYSQL_ATTR_SSL_CA) => env('MYSQL_ATTR_SSL_CA'),
+            ]) : [],
+        ],
+
         'sqlite' => [
             'driver' => 'sqlite',
             'url' => env('DB_URL'),

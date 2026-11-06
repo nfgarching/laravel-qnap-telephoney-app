@@ -4,3 +4,4 @@
 /src/node_modules/
 /src/database/*.sqlite*
 /src/storage/*.key
+/src/packages/

@@ -88,6 +88,21 @@ return [
             'enabled' => true,
             'label' => 'Datenbank',
             'models' => [
+                // Adressen aus der AkV-Datenbank (Namen + NamenKom)
+                [
+                    'model' => App\Models\Name::class,
+                    'label' => 'AkV',
+                    'phone_columns' => [
+                        'Telefon' => 'telefonnummern',
+                        'Mobil' => 'mobilnummern',
+                    ],
+                    'name' => ['Vorname', 'Nachname'],
+                    'street' => 'Strasse',
+                    'postal_code' => 'Plz',
+                    'city' => 'Ort',
+                    'country' => 'Land',
+                    'scope' => 'telephony',
+                ],
                 // Beispiel – an eigene Tabellen anpassen:
                 // [
                 //     'model' => App\Models\Contact::class,

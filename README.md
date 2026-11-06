@@ -4,6 +4,14 @@ Eigenständige Laravel-13-App mit [`nfgarching/telephony`](https://github.com/nf
 eingehende sipgate-Anrufe live auf dem Handy (Reverb + Web-Push), Datenbank SQLite.
 Läuft auf einem QNAP-NAS (Container Station) hinter einem vorhandenen Traefik, der TLS übernimmt.
 
+<p>
+  <img src="storage/images/anrufliste.png" alt="Anrufliste mit klingelndem Anruf, verpassten und angenommenen Anrufen" width="320">
+  &nbsp;
+  <img src="storage/images/anruf-details.png" alt="Anrufdetails mit Kontaktdaten, Rufnummer, Adresse und Notiz" width="320">
+</p>
+
+*Links die Anrufliste mit laufendem Anruf, rechts die Details eines angenommenen Anrufs.*
+
 ## Aufbau
 
 ```

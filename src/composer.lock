@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "572af7059f39e2b22d778b1beca28d64",
+    "content-hash": "9383e6f9d63637c639eaaeef2e90ce2d",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -1545,6 +1545,68 @@
             ],
             "time": "2026-08-24T17:13:02+00:00",
             "published-time": "2026-08-24T17:13:22+00:00"
+        },
+        {
+            "name": "kyslik/column-sortable",
+            "version": "8.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Kyslik/column-sortable.git",
+                "reference": "dd1427968446277be318e97757cb5f6e429aba46"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Kyslik/column-sortable/zipball/dd1427968446277be318e97757cb5f6e429aba46",
+                "reference": "dd1427968446277be318e97757cb5f6e429aba46",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/database": "5.8.*|^6.0|^7.0|^8.0|^9.0|^10.0|^11.0|^12.0|^13.0",
+                "illuminate/support": "5.8.*|^6.0|^7.0|^8.0|^9.0|^10.0|^11.0|^12.0|^13.0",
+                "php": ">=7.2"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^5.0|^7.0|^8.0|^9.0|^10.0|^11.0",
+                "phpunit/phpunit": "^8.5|^9.5.10|^10.5|^11.5.3|^12.5.12"
+            },
+            "type": "package",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Kyslik\\ColumnSortable\\ColumnSortableServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Kyslik\\ColumnSortable\\": "src/ColumnSortable/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Martin Kiesel",
+                    "email": "martin.kiesel@gmail.com",
+                    "role": "Developer and maintainer"
+                }
+            ],
+            "description": "Package for handling column sorting in Laravel 6.x",
+            "keywords": [
+                "column",
+                "laravel",
+                "sort",
+                "sortable",
+                "sorting"
+            ],
+            "support": {
+                "issues": "https://github.com/Kyslik/column-sortable/issues",
+                "source": "https://github.com/Kyslik/column-sortable/tree/8.0.0"
+            },
+            "time": "2026-03-17T20:02:31+00:00",
+            "published-time": "2026-03-17T20:05:23+00:00"
         },
         {
             "name": "laravel-notification-channels/webpush",
@@ -3353,18 +3415,79 @@
             "published-time": "2026-10-20T17:48:30+00:00"
         },
         {
-            "name": "nfgarching/telephony",
+            "name": "nfgarching/core",
             "version": "dev-main",
             "source": {
                 "type": "git",
-                "url": "https://github.com/nfgarching/laravel-bootstrap-telephony.git",
-                "reference": "97a58f917430e33727d0c94e2dbd9d753bb37dc5"
+                "url": "https://github.com/nfgarching/laravel-bootstrap-core.git",
+                "reference": "2dd42e8a1593ab81ce0f621967ae249eb2b1d86c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nfgarching/laravel-bootstrap-telephony/zipball/97a58f917430e33727d0c94e2dbd9d753bb37dc5",
-                "reference": "97a58f917430e33727d0c94e2dbd9d753bb37dc5",
+                "url": "https://api.github.com/repos/nfgarching/laravel-bootstrap-core/zipball/2dd42e8a1593ab81ce0f621967ae249eb2b1d86c",
+                "reference": "2dd42e8a1593ab81ce0f621967ae249eb2b1d86c",
                 "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "^13.0",
+                "kyslik/column-sortable": "^8.0",
+                "livewire/livewire": "^4.0",
+                "php": "^8.4"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^10.0",
+                "phpunit/phpunit": "^12.0"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Nfgarching\\Core\\LibraryServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Nfgarching\\Core\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "Nfgarching\\Core\\Tests\\": "tests/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Norbert Fröhler",
+                    "email": "norbert.froehler@gmail.com",
+                    "role": "Owner"
+                }
+            ],
+            "description": "Basis-Package für Laravel-Anwendungen mit Bootstrap 5 und Livewire: Blade-Komponenten, Layouts, Auth, Navigation-Registries, Props und gemeinsame Traits.",
+            "homepage": "https://github.com/nfgarching/laravel-bootstrap-core",
+            "keywords": [
+                "bootstrap",
+                "core",
+                "laravel",
+                "livewire"
+            ],
+            "support": {
+                "source": "https://github.com/nfgarching/laravel-bootstrap-core/tree/main",
+                "issues": "https://github.com/nfgarching/laravel-bootstrap-core/issues"
+            },
+            "time": "2026-11-04T22:39:01+00:00"
+        },
+        {
+            "name": "nfgarching/telephony",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "packages/nfgarching/telephony",
+                "reference": "97a58f917430e33727d0c94e2dbd9d753bb37dc5"
             },
             "require": {
                 "giggsey/libphonenumber-for-php": "^8.13|^9.0",
@@ -3386,7 +3509,6 @@
                 "laravel/reverb": "WebSocket-Server für die Live-Anzeige (php artisan install:broadcasting)",
                 "nfgarching/core": "Gemeinsames Bootstrap-5.3-Layout der nfgarching-Packages"
             },
-            "default-branch": true,
             "type": "library",
             "extra": {
                 "laravel": {
@@ -3429,11 +3551,10 @@
                 "telephony",
                 "webpush"
             ],
-            "support": {
-                "source": "https://github.com/nfgarching/laravel-bootstrap-telephony/tree/main",
-                "issues": "https://github.com/nfgarching/laravel-bootstrap-telephony/issues"
-            },
-            "time": "2026-11-04T21:52:45+00:00"
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
         },
         {
             "name": "nikic/php-parser",
@@ -12075,6 +12196,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
+        "nfgarching/core": 20,
         "nfgarching/telephony": 20
     },
     "prefer-stable": true,
