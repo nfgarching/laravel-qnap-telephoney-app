@@ -26,6 +26,10 @@ return [
     'list_days' => 7,
     'retention_days' => env('TELEPHONY_RETENTION_DAYS', 90),
 
+    // Nicht angenommene Anrufe nach so vielen Sekunden aus „Laufende Anrufe“
+    // ausblenden; sie stehen dann in der Liste (null = erst beim Auflegen).
+    'ringing_timeout' => env('TELEPHONY_RINGING_TIMEOUT', 30),
+
     /*
     |--------------------------------------------------------------------------
     | Telefonanbieter

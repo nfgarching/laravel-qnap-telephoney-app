@@ -3487,7 +3487,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/nfgarching/telephony",
-                "reference": "97a58f917430e33727d0c94e2dbd9d753bb37dc5"
+                "reference": "4b4ecbe7082f0d0788677334d677c931b04c0ea0"
             },
             "require": {
                 "giggsey/libphonenumber-for-php": "^8.13|^9.0",
